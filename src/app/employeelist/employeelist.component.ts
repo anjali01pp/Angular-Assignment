@@ -2,7 +2,7 @@ import { Component,Injectable,OnInit ,Input, Output } from '@angular/core';
 import { DatalayerService } from '../datalayer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { outputAst } from '@angular/compiler';
-
+import { LoaderService } from '../loader.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -27,7 +27,7 @@ export class EmployeelistComponent implements OnInit {
  @Output() employeeCount:any;
  @Output() employeeCountMen:any;
  @Output() employeeCountfemale:any;
-  constructor(private datalayer:DatalayerService ,private router:Router
+  constructor(private datalayer:DatalayerService ,private router:Router,private loader :LoaderService
   
   ) { }
 
@@ -85,7 +85,9 @@ export class EmployeelistComponent implements OnInit {
       this.successMessage = 'Successfully deleted the data!';
      
       this.showSuccessMessage = true;
+      this.loader.show();
        setTimeout(() => {
+        this.loader.hide();
       this.showSuccessMessage = false;
       this.Employees = [];
       this.fetchemployeedata();

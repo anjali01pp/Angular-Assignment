@@ -4,13 +4,13 @@
         <a class="navbar-brand ">Employee Portal</a>
       </div>
       <ul class="nav navbar-nav ">
-        <li  style="cursor:pointer;" ><a routerLink="/Dashboard">Dashboard</a></li>
-        <li  style="cursor:pointer;"><a  routerLink="/Employee_list">Employees</a></li>
+        <li  style="cursor:pointer;"  [routerLinkActive]="'active'"><a routerLink="/Dashboard">Dashboard</a></li>
+        <li  style="cursor:pointer;"  [routerLinkActive]="'active'"><a  routerLink="/Employee_list">Employees</a></li>
        
       </ul>
       <ul class="nav navbar-nav navbar-right ">
-        <li ><a routerLink="/Basic_information" style="cursor:pointer;"><span class="glyphicon glyphicon-user " ></span> Add Employee</a></li>
-        <li ><a routerLink="/login" style="cursor:pointer;"><span class="glyphicon glyphicon-log-in "></span> Logout</a></li>
+        <li ><a routerLink="/Basic_information" style="cursor:pointer;"  [routerLinkActive]="'active'"><span class="glyphicon glyphicon-user " ></span> Add Employee</a></li>
+        <li ><a routerLink="/login" style="cursor:pointer;"  [routerLinkActive]="'active'"><span class="glyphicon glyphicon-log-in "></span> Logout</a></li>
       </ul>
     </div>
   </nav>

@@ -5,6 +5,7 @@ import { LoginService } from '../login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormData,Address } from '../formdata';
 import { DatalayerService } from '../datalayer.service';
+import { LoaderService } from '../loader.service';
 
 @Component({
   selector: 'app-basicinformation',
@@ -20,7 +21,7 @@ export class BasicinformationComponent implements OnInit  {
   showSuccessMessage :any;
   successMessage: string = '';
   errorMessage: string = '';
-  constructor(private fb: FormBuilder,private loginservice:LoginService,private http:HttpClient, private datalayer:DatalayerService,private route:ActivatedRoute,private router:Router ) {}
+  constructor(private fb: FormBuilder,private loginservice:LoginService,private http:HttpClient, private datalayer:DatalayerService,private route:ActivatedRoute,private router:Router,private loader :LoaderService ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -283,9 +284,10 @@ deleteResume() {
                 this.successMessage = 'Successfully Submitted the data!';
                 this.errorMessage = '';
                 this.showSuccessMessage = true;
-    
+                this.loader.show();
                 setTimeout(() => {
                   this.showSuccessMessage = false;
+                  this.loader.hide();
                 }, 3000);
     
                 this.form.reset();
@@ -316,9 +318,11 @@ deleteResume() {
                 this.successMessage = 'Successfully Updated the data!';
                 this.errorMessage = '';
                 this.showSuccessMessage = true;
+                this.loader.show();
     
                 setTimeout(() => {
                   this.showSuccessMessage = false;
+                  this.loader.hide();
                 }, 3000);
     
                 this.form.reset();

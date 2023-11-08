@@ -42,8 +42,10 @@ No Results Found!!!!!!!
     <div *ngIf="showSuccessMessage" class="success-message">
       {{successMessage}}
     </div>
+   
         <app-deleteconfirmation
         *ngIf="confirmationDialogVisible"
         [message]="confirmationMessage"
         (confirmed)="handleDeleteConfirmation($event)"
       ></app-deleteconfirmation>
+      <app-loader></app-loader>

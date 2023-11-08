@@ -16,7 +16,7 @@ export class LoginComponent {
   showPassword: boolean = false;
   showSuccessMessage :any;
   successMessage: string = '';
-  errorMessage: string = '';
+  errorMessage= false;
   loading:any;
   constructor(private fb: FormBuilder, private login:LoginService,private loader :LoaderService) {
    
@@ -38,6 +38,12 @@ export class LoginComponent {
         },
         (error) => {
           this.loader.hide();
+          this.errorMessage = true;
+          setTimeout(() => {
+         
+          this.errorMessage = false;
+        
+        }, 3000);
           console.log(error);
     
         }
