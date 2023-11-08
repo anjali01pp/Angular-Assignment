@@ -49,7 +49,7 @@ export class BasicinformationComponent implements OnInit  {
         position: [''],
         statusId: [0],
         gender: [true],
-        mobile: [null, [Validators.required, Validators.pattern('^[0-9]{8}$')]],
+        mobile: [null, [Validators.required, Validators.pattern('^[0-9]{9}$')]],
         resume: [''],
         profilePic: [''],
         resumeBase64: [''],
