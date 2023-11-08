@@ -1,0 +1,49 @@
+<app-header class="navbar"></app-header>
+<div class="container" style="margin-top:70px;" >
+    <!-- <h5 style="display:flex;justify-content: flex-end;margin-bottom:30px;color:blue;cursor:pointer;" ><a (click)="getEmployeeData()">Show All</a>({{employeecount}})</h5> -->
+    <!-- <button style="float:right;width:10%;border:none; background-repeat: no-repeat;"><i class="fa fa-search"></i></button> -->
+    <div class="row gx-5" style="margin:15px;"> <input type="text" id="employeeInput" [(ngModel)]="searchText" placeholder="Search By Name........."></div>
+   
+   
+    <div class="row" >
+        <div *ngFor="let employee of Employees | filter: searchText">
+            <div class="col-md-3 col-lg-3">
+        <div class="student">
+         
+    
+      <div class="cardList" >
+        <h5 class="right"> <a (click)="showDeleteConfirmation(employee.id)" style="color: red;position: relative;cursor: pointer; display: flex; left:100px;"><span class="glyphicon glyphicon-trash"></span></a></h5>
+        
+        <div class=" bg-transparent text-center">
+          <img *ngIf="employee.profilePic !=''" class="profile_img" [src]="'../assets/images/' + employee.profilePic" alt="Employee dp">
+            <h4 style="color:rgba(33, 72, 117, 0.966);
+          ">{{employee.name}}</h4>
+          </div>
+          <div class="card-body">
+            <p class="mb-0" *ngIf="employee.gender == true"><strong class="pr-1" >Gender:</strong> <i class="fa fa-male" style="padding:10px;font-size: 20px;"></i>Male</p>
+            <p class="mb-0" *ngIf="employee.gender == false"><strong class="pr-1" >Gender:</strong><i class="fa fa-female" style="padding:10px;font-size: 20px;"></i>Female</p>
+            <p class="mb-0"><strong class="pr-1">Date of Birth:</strong>{{employee.dob | date}}</p>
+
+            <p class="mb-0"><strong class="pr-1">Mobile Number:</strong> {{employee.mobile}}</p>
+            <p class="mb-0"><strong class="pr-1">Email:</strong> {{employee.email}}</p>
+  
+            <h5 class="right"> <a (click)="Editemployee(employee.id)" style="color: rgb(235, 10, 10);position: relative;cursor: pointer; display: flex; left:175px;">Edit</a></h5>
+          </div>
+      </div>
+    
+      </div>
+      </div>
+    </div>
+    </div>
+    </div>
+    <h3 class="center" *ngIf="(Employees | filter: searchText).length === 0">
+No Results Found!!!!!!!
+    </h3>
+    <div *ngIf="showSuccessMessage" class="success-message">
+      {{successMessage}}
+    </div>
+        <app-deleteconfirmation
+        *ngIf="confirmationDialogVisible"
+        [message]="confirmationMessage"
+        (confirmed)="handleDeleteConfirmation($event)"
+      ></app-deleteconfirmation>

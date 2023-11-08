@@ -1,0 +1,242 @@
+<app-header></app-header>
+<div class="signup-form" >
+<div *ngIf="employeeid == 0  ||  employeeid == undefined"  class="form-header">
+  <h1>Create Account</h1>
+</div>
+
+<div *ngIf="employeeid !==  0 &&  employeeid !== undefined" class="form-header">
+  <h1>Edit Account</h1>
+</div>
+<div class="formbold-main-wrapper">
+    <div class="formbold-form-wrapper">
+      <form [formGroup]="form">
+        <div class="formbold-steps">
+          <ul>
+            <li class="formbold-step-menu1" [class.active]="currentStep === 1">
+              <span>1</span>
+             Basic Details
+            </li>
+            <li class="formbold-step-menu2" [class.active]="currentStep === 2">
+              <span>2</span>
+              Address
+            </li>
+            <li class="formbold-step-menu3" [class.active]="currentStep === 3">
+              <span>3</span>
+              Uploads
+            </li>
+          </ul>
+        </div>
+  
+        <div class="formbold-form-step-1" [class.active]="currentStep === 1">
+          <div class="formbold-input-flex">
+            <div>
+              <label for="name" class="formbold-form-label">Name:</label>
+              <input
+                type="text"
+                formControlName="name"
+              
+                id="firstname"
+                class="formbold-form-input"
+                (input)="removeError('name')"
+              />
+              <div id="nameError" class="error-message" >
+                Name is required
+              </div>
+            </div>
+            <div>
+              <label for="dob" class="formbold-form-label">Date of Birth:</label>
+              <input
+                type="date"
+                formControlName="dob"
+                id="dob"
+                class="formbold-form-input"
+                (input)="removeError('dob')"
+              />
+              <div id="dobError" class="error-message">
+                Date of birth is required
+              </div>
+            </div>
+          </div>
+  
+          <div class="formbold-input-flex">
+            <div>
+              <label for="position" class="formbold-form-label">Position:</label>
+              <input
+                type="text"
+                formControlName="position"
+                id="position"
+                class="formbold-form-input"
+              />
+            </div>
+<!--         
+                <div>
+                    <label for="gender" class="label-title">Gender:</label>
+                    <div>
+                      <label >
+                        <input type="radio" [value]="1" formControlName="gender"> Male
+                      </label>
+                      <label style="margin-right:5px;">
+                        <input type="radio" [value]="2" formControlName="gender"> Female
+                      </label>
+                      </div>
+                </div>
+             -->
+            <div>
+                
+              <label for="email" class= "formbold-form-label">Email Address:</label>
+              <input
+                type="email"
+                formControlName="email"
+                placeholder="example@mail.com"
+                id="email"
+                class="formbold-form-input"
+                (input)="removeError('email')"
+              />
+              <div id="emailError" class="error-message" >
+                Email is required
+              </div>
+              <div id="emailvalid" class="error-message" >
+                Email is not valid
+              </div>
+            </div>
+          </div>
+          <div class="formbold-input-flex">
+            <div style="width:50%;">
+              <label for="gender" class= "formbold-form-label">Gender:</label>
+              <div>
+                <!-- <label class= "radioinput">
+                  <input type="radio" [value]="true" formControlName="gender"  (change)="removeError('gender')"> Male
+                </label>
+                
+              
+                <label  class= "radioinput">
+                  <input type="radio" [value]="false" formControlName="gender" (change)="removeError('gender')"> Female
+                </label> -->
+                <label class="radioinput"  (click)="removeError('gender')">
+                  <input type="radio" [value]="true" formControlName="gender"> Male
+                </label>
+                
+                <label class="radioinput"   (click)="removeError('gender')">
+                  <input type="radio" [value]="false" formControlName="gender"> Female
+                </label>
+    
+                <div id="genderError" class="error-message" >
+                  Gender is required
+                </div>
+                </div>
+          </div>
+            <div style="width:50%;" >
+              <label for="mobile" class="formbold-form-label">Phone Number:</label>
+              <input
+                type="text"
+                formControlName="mobile"
+                id="mobile"
+                (input)="removeError('mobile')"
+                class="formbold-form-input"
+                maxlength="8"
+              />
+              <div id="mobileError" class="error-message" >
+                Mobile Number is required
+              </div>
+              <div id="mobilevalid" class="error-message" >
+                Mobile Number is not valid
+              </div>
+            </div>
+            </div>
+        
+        </div>
+       
+        <div class="formbold-form-step-2" [class.active]="currentStep === 2">
+          <!-- <div>
+            <label for="message" class="formbold-form-label">Message</label>
+            <textarea
+              rows="6"
+              formControlName="message"
+              id="message"
+              placeholder="Type your message"
+              class="formbold-form-input"
+            ></textarea>
+          </div> -->
+          <button class="btn address" (click)="addNewAddress()">Add New Address</button>
+          <ng-container formArrayName="addresses" *ngFor="let o of addresses.controls; let i = index">
+            <b class="text">Address {{i+1}}</b> <button *ngIf="i+1 >1" class="btn cancelbutton " (click)="removeContact(i)">&times;</button>
+            <div  [formGroupName]="i">
+          <div >
+            <label for="address1" class="formbold-form-label"  >Address 1:</label>
+            <input    class="formbold-form-input" type="text" id="address1" formControlName="address1">
+          </div>
+          <div>
+            <label for="address2" class="formbold-form-label">Address 2:</label>
+            <input    class="formbold-form-input" type="text" id="address2" formControlName="address2">
+          </div>
+          <div style="margin-bottom:20px;" >
+            
+            <label class="formbold-form-label" for="street">Street:</label>
+            <input    class="formbold-form-input" type="text" id="street" formControlName="street">
+        </div>
+        <div  class="formbold-input-flex" >
+            <label  class="formbold-form-label" for="city">City:</label>
+            <input   class="formbold-form-input" type="text" id="city" formControlName="city">
+          
+         
+            <label    class="formbold-form-label" for="state">State:</label>
+            <input    class="formbold-form-input" type="text" id="state" formControlName="state">
+        </div>
+        <div class="formbold-input-flex" >
+            <label  class="formbold-form-label" for="zip">ZIP:</label>
+            <input    class="formbold-form-input" type="text" id="zip" formControlName="zip">
+         
+            <label  class="formbold-form-label" for="country">Country:</label>
+            <input    class="formbold-form-input" type="text" id="country" formControlName="country">
+          </div>
+          </div>
+        </ng-container>
+        
+        </div>
+        
+     
+        <div class="formbold-form-step-3" [class.active]="currentStep === 3">
+          <div class="formbold-form-confirm">
+            <label for="profilePic">Profile Picture:</label>
+            <input *ngIf="!form.get('profilePic')?.value" class="text" type="file"    (change)="onFileSelected($event)" accept="image/*">
+            <span *ngIf="form.get('profilePic')?.value">{{ form.get('profilePic')?.value }}</span>
+            <button  *ngIf="form.get('profilePic')?.value" class="upload" (click)="deleteProfilePic()">Delete</button>
+            <label for="resume">Resume:</label>
+            <input *ngIf="!form.get('resume')?.value" class="text" type="file"   (change)="onResumeChange($event)" accept=".pdf, .doc, .docx">
+            <span *ngIf="form.get('resume')?.value">{{ form.get('resume')?.value }}</span>
+            <button  *ngIf="form.get('resume')?.value" class="upload" (click)="deleteResume()">Delete</button>
+          </div>
+        </div>
+        <div >
+        <button style="justify-content:flex-start;"
+        class="formbold-btnbackbutton"
+        (click)="prevStep()"
+       *ngIf="currentStep != 1"
+      >
+        Back
+      </button>
+       
+          
+  
+          <button 
+            class="formbold-btn "
+            (click)="nextStep()"
+            *ngIf="currentStep < 3"style="float:right;"
+          >
+            Next Step
+           
+          </button>
+          <button type="submit" class="btn formbold-btnbackbutton" style="float:right;" type="submit" (click)="onSubmit()" *ngIf="currentStep === 3"  >Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+  <div *ngIf="showSuccessMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+ 
+  
