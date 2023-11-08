@@ -289,6 +289,9 @@ deleteResume() {
                 }, 3000);
     
                 this.form.reset();
+                setTimeout(() => {
+                  this.router.navigate(['/Employee_list']);
+                }, 3500);
                 console.log(data);
               } else {
                 this.errorMessage = 'Failed to submit the data.';
@@ -303,6 +306,9 @@ deleteResume() {
           );
         }
         else {
+          this.form.patchValue({
+            id: id, 
+          });
           const formData = this.form.value;
           this.http.put('https://zc-angular-api.azurewebsites.net/api/v1/Employee/UpdateEmployee', formData, {  headers, responseType: 'text' }).subscribe(
             (response) => {
@@ -319,7 +325,7 @@ deleteResume() {
               
                 setTimeout(() => {
                   this.router.navigate(['/Employee_list']);
-                }, 4000);
+                }, 3500);
                 console.log(response);
               } else {
                 this.errorMessage = 'Failed to submit the data.';
