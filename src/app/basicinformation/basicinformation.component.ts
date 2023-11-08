@@ -6,6 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormData,Address } from '../formdata';
 import { DatalayerService } from '../datalayer.service';
 import { LoaderService } from '../loader.service';
+import { Observable } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 @Component({
   selector: 'app-basicinformation',
@@ -21,6 +23,7 @@ export class BasicinformationComponent implements OnInit  {
   showSuccessMessage :any;
   successMessage: string = '';
   errorMessage: string = '';
+  base64Output! : string;
   constructor(private fb: FormBuilder,private loginservice:LoginService,private http:HttpClient, private datalayer:DatalayerService,private route:ActivatedRoute,private router:Router,private loader :LoaderService ) {}
 
   ngOnInit(): void {
@@ -117,6 +120,37 @@ export class BasicinformationComponent implements OnInit  {
        
       }
     }
+  }
+  
+//   onFileSelected(event:any) {
+//     const input = event.target as HTMLInputElement;
+//     if (input.files?.length) {
+//       const file: File = input.files[0];
+//       const fileSizeInKB = file.size / 1024;
+//       const maxSizeInKB = 500;
+//       if (fileSizeInKB <= maxSizeInKB) {
+//     this.convertFile(event.target.files[0]).subscribe(base64 => {
+//       this.base64Output = base64;
+//        this.form.get('profilePic')?.setValue(file.name);
+//       console.log("picture" ,  this.base64Output)
+//     });
+//     }
+//     else {
+//       alert('File size exceeds the limit (500 KB)');
+//       //       input.value = '';
+//     }
+  
+//   }
+// }
+
+  convertFile(file : File) : Observable<string> {
+    const result = new ReplaySubject<string>(1);
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+   
+    reader.onload = (event) => result.next(btoa((event.target?.result as string) ?? ''));
+ 
+    return result;
   }
   
   onResumeChange(event: any) {
